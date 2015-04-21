@@ -11,6 +11,7 @@ import (
 )
 
 // 抛出一个类型无法转换的错误
+// val当前值；t目标类型。
 func typeError(val interface{}, t string) error {
 	return fmt.Errorf("[%T:%v]无法转换成[%v]类型", val, val, t)
 }
@@ -18,18 +19,19 @@ func typeError(val interface{}, t string) error {
 // 字符串转Bool值，供Bool()函数调用。
 // 添加了一些strconv.ParseFloat不支持但又比较常用的字符串转换
 func str2Bool(str string) (bool, error) {
-	str = strings.ToLower(strings.TrimSpace(str))
-
 	if val, err := strconv.ParseBool(str); err == nil {
 		return val, nil
 	} else if val, err := strconv.ParseFloat(str, 32); err == nil {
 		return val != 0, nil
-	} else if str == "on" {
+	}
+
+	switch strings.ToLower(strings.TrimSpace(str)) {
+	case "on":
 		return true, nil
-	} else if str == "off" {
+	case "off":
 		return false, nil
-	} else {
-		return false, typeError(val, "bool")
+	default:
+		return false, typeError(str, "bool")
 	}
 }
 
@@ -89,27 +91,23 @@ func Uint64(val interface{}) (uint64, error) {
 	case int:
 		if ret < 0 {
 			return 0, typeError(ret, "uint64")
-		} else {
-			return uint64(ret), nil
 		}
+		return uint64(ret), nil
 	case int8:
 		if ret < 0 {
 			return 0, typeError(ret, "uint64")
-		} else {
-			return uint64(ret), nil
 		}
+		return uint64(ret), nil
 	case int32:
 		if ret < 0 {
 			return 0, typeError(ret, "uint64")
-		} else {
-			return uint64(ret), nil
 		}
+		return uint64(ret), nil
 	case int64:
 		if ret < 0 {
 			return 0, typeError(ret, "uint64")
-		} else {
-			return uint64(ret), nil
 		}
+		return uint64(ret), nil
 	case uint:
 		return uint64(ret), nil
 	case uint8:
@@ -119,33 +117,28 @@ func Uint64(val interface{}) (uint64, error) {
 	case float32:
 		if ret < 0 {
 			return 0, typeError(ret, "uint64")
-		} else {
-			return uint64(ret), nil
 		}
+		return uint64(ret), nil
 	case float64:
 		if ret < 0 {
 			return 0, typeError(ret, "uint64")
-		} else {
-			return uint64(ret), nil
 		}
+		return uint64(ret), nil
 	case bool:
 		if ret {
 			return 1, nil
-		} else {
-			return 0, nil
 		}
+		return 0, nil
 	case []byte:
 		if val, err := strconv.ParseFloat(string(ret), 32); err == nil {
 			return uint64(val), nil
-		} else {
-			return 0, typeError(val, "uint64")
 		}
+		return 0, typeError(val, "uint64")
 	case string:
 		if val, err := strconv.ParseFloat(ret, 32); err == nil {
 			return uint64(val), nil
-		} else {
-			return 0, typeError(val, "uint64")
 		}
+		return 0, typeError(val, "uint64")
 	default:
 		return 0, typeError(ret, "uint64")
 	}

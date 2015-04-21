@@ -12,4 +12,4 @@
 //  conv.To("3", reflect.ValueOf(v)) // 将3转换成数值,并写入v中.
 package conv
 
-const Version = "0.1.0.141220"
+const Version = "0.1.1.150421"
