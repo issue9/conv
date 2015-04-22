@@ -566,23 +566,3 @@ func MustSlice(val interface{}, def []interface{}) []interface{} {
 		return ret
 	}
 }
-
-// 将val转换成map[string]interface{}类型或是在无法转换的情况下返回error。
-// 若传递的val是一个struct对象，则会将属性转换成map字段。
-func Map(val interface{}) (map[string]interface{}, error) {
-	switch ret := val.(type) {
-	case map[string]interface{}:
-		return ret, nil
-	default:
-		return Obj2Map(val, nil)
-	}
-}
-
-// 将val转换成map[string]interface{}类型或是在无法转换的情况下返回def参数。
-func MustMap(val interface{}, def map[string]interface{}) map[string]interface{} {
-	if ret, err := Map(val); err != nil {
-		return def
-	} else {
-		return ret
-	}
-}

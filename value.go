@@ -13,20 +13,20 @@ import (
 // 将source的值保存到成target中。
 //
 // 若类型不能直接转换，会尝试其它种方式转换，比如strconv.ParseInt()等。
-func To(source interface{}, target reflect.Value) error {
+func Value(source interface{}, target reflect.Value) error {
 	kind := target.Kind()
 
-	if kind == reflect.Ptr {
+	for kind == reflect.Ptr {
 		target = target.Elem()
 		kind = target.Kind()
 	}
 
 	if !target.CanSet() {
-		return fmt.Errorf("无法改变target的值[%v]", target.Kind())
+		return fmt.Errorf("conv.Value:无法改变target的值[%v]", target.Kind())
 	}
 
 	if !target.IsValid() {
-		return errors.New("无效的target值")
+		return errors.New("conv.Value:无效的target值")
 	}
 
 	switch kind {

@@ -164,19 +164,6 @@ func TestMustSlice(t *testing.T) {
 	a.Equal(MustSlice(7, def), []interface{}{4, 5, 5})
 }
 
-func TestMustMap(t *testing.T) {
-	def := map[string]interface{}{"1": 1, "str": "str"}
-	v1 := map[string]interface{}{"1": 2, "str": "str"}
-	a := assert.New(t)
-	// 可解析
-
-	a.Equal(MustMap(v1, def), v1)
-
-	// 不可解析
-	a.Equal(MustMap(123, def), def)
-	a.Equal(MustMap("adb", def), def)
-}
-
 func TestBool(t *testing.T) {
 	fn := func(val interface{}, result bool) {
 		ret, err := Bool(val)
@@ -322,22 +309,4 @@ func TestSlice(t *testing.T) {
 	fn("123", []interface{}{int32(49), int32(50), int32(51)})
 	fn([]int{1, 2, 3}, []interface{}{int(1), int(2), int(3)})
 	fn([]string{"1", "ss"}, []interface{}{"1", "ss"})
-}
-
-type test1 struct {
-	Id       int
-	Name     string
-	password string
-}
-
-func TestMap(t *testing.T) {
-	fn := func(val interface{}, result map[string]interface{}) {
-		ret, err := Map(val)
-		assert.Nil(t, err)
-		assert.Equal(t, ret, result)
-	}
-
-	fn(map[string]interface{}{"1": 1, "2": 3}, map[string]interface{}{"1": 1, "2": 3})
-	obj := &test1{5, "admin", "abc"}
-	fn(obj, map[string]interface{}{"Id": 5, "Name": "admin"})
 }
