@@ -10,5 +10,3 @@
 //  v := 5
 //  conv.Value("3", reflect.ValueOf(v)) // 将3转换成数值,并写入v中.
 package conv
-
-const Version = "0.2.2.150422"
