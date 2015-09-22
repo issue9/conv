@@ -42,6 +42,12 @@ func Value(source interface{}, target reflect.Value) error {
 		} else {
 			target.SetInt(val)
 		}
+	case reflect.Float32, reflect.Float64:
+		if val, err := Float64(source); err != nil {
+			return err
+		} else {
+			target.SetFloat(val)
+		}
 	case reflect.Bool:
 		if val, err := Bool(source); err != nil {
 			return err
@@ -58,7 +64,7 @@ func Value(source interface{}, target reflect.Value) error {
 		sourceValue := reflect.ValueOf(source)
 		targetType := target.Type()
 		if !sourceValue.Type().ConvertibleTo(targetType) {
-			return errors.New("无法转换成目标类型")
+			return fmt.Errorf("conv.Value:当前类型[%v]无法转换成目标类型:[%v]", sourceValue.Type(), targetType)
 		}
 		target.Set(sourceValue.Convert(targetType))
 	}
