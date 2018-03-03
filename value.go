@@ -10,9 +10,9 @@ import (
 	"reflect"
 )
 
-// 将source的值保存到成target中。
+// Value 将 source 的值保存到成 target 中。
 //
-// 若类型不能直接转换，会尝试其它种方式转换，比如strconv.ParseInt()等。
+// 若类型不能直接转换，会尝试其它种方式转换，比如 strconv.ParseInt() 等。
 func Value(source interface{}, target reflect.Value) error {
 	kind := target.Kind()
 

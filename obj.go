@@ -10,19 +10,19 @@ import (
 	"reflect"
 )
 
-// 字段转换
-// 用于map转换到一个对象实例或是从一个对象实例转换到map
+// FieldConvert 字段转换
+// 用于 map 转换到一个对象实例或是从一个对象实例转换到 map
 type FieldConvert func(src string) (dest string)
 
-// FieldConvert的默认实现
+// FieldConvert 的默认实现
 func defaultFieldConvert(src string) string {
 	return src
 }
 
-// 将obj对象转换成map[string]interface{}格式的数据
+// 将 obj 对象转换成 map[string]interface{} 格式的数据
 func obj2Map(obj interface{}, maps *map[string]interface{}, conv FieldConvert) error {
 	objVal := reflect.ValueOf(obj)
-	if objVal.Kind() == reflect.Ptr { //如果是指针，则获取指向的对象
+	if objVal.Kind() == reflect.Ptr { // 如果是指针，则获取指向的对象
 		objVal = objVal.Elem()
 	}
 
@@ -61,7 +61,7 @@ func obj2Map(obj interface{}, maps *map[string]interface{}, conv FieldConvert) e
 	return nil
 }
 
-// 将obj转换成map，只能转换可导出的数据。
+// Obj2Map 将 obj 转换成 map，只能转换可导出的数据。
 func Obj2Map(obj interface{}, conv FieldConvert) (map[string]interface{}, error) {
 	ret := make(map[string]interface{})
 
@@ -71,7 +71,7 @@ func Obj2Map(obj interface{}, conv FieldConvert) (map[string]interface{}, error)
 	return ret, obj2Map(obj, &ret, conv)
 }
 
-// 将map中的数据转换成一个结构中的数据。
+// Map2Obj 将 map 中的数据转换成一个结构中的数据。
 func Map2Obj(src interface{}, dest interface{}, conv FieldConvert) error {
 	srcVal, destVal, conv, err := map2ObjCheck(src, dest, conv)
 	if err != nil {
@@ -104,7 +104,7 @@ func Map2Obj(src interface{}, dest interface{}, conv FieldConvert) error {
 			continue
 		}
 
-		// 如果src中元素的类型为Interface，则再对该值使用reflect.ValueOf
+		// 如果 src 中元素的类型为 Interface，则再对该值使用 reflect.ValueOf
 		// 就能正常地使用类型断言和其它判断了。
 		if srcItemType.Kind() == reflect.Interface {
 			srcItemVal = reflect.ValueOf(srcItemVal.Interface())
@@ -131,7 +131,7 @@ func Map2Obj(src interface{}, dest interface{}, conv FieldConvert) error {
 	return nil
 }
 
-// 对map2Obj各个参数的检测，并返回正确的值或是错误信息。
+// 对 map2Obj 各个参数的检测，并返回正确的值或是错误信息。
 func map2ObjCheck(src interface{}, dest interface{}, conv FieldConvert) (srcVal reflect.Value, destVal reflect.Value, fun FieldConvert, err error) {
 	destVal = reflect.ValueOf(dest)
 	if destVal.Kind() != reflect.Ptr {

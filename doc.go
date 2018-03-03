@@ -2,11 +2,11 @@
 // Use of this source code is governed by a MIT
 // license that can be found in the LICENSE file.
 
-// conv 提供了基础的类型转换功能。会尽最大可能地
+// Package conv 提供了基础的类型转换功能。会尽最大可能地
 // 将当前的值转换成指定类型的值。
-//  conv.MustInt("123", 0)  // 返回123的数值
-//  conv.MustString(123, "")// 返回字符串123
-//  conv.Int("123", 0)      // 返回123数值和nil的error接口
+//  conv.MustInt("123", 0)  // 返回 123 的数值
+//  conv.MustString(123, "")// 返回字符串 123
+//  conv.Int("123", 0)      // 返回 123 数值和 nil 的 error 接口
 //  v := 5
-//  conv.Value("3", reflect.ValueOf(v)) // 将3转换成数值,并写入v中.
+//  conv.Value("3", reflect.ValueOf(v)) // 将 3 转换成数值,并写入 v 中.
 package conv

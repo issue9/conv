@@ -16,8 +16,8 @@ func typeError(val interface{}, t string) error {
 	return fmt.Errorf("[%T:%v]无法转换成[%v]类型", val, val, t)
 }
 
-// 字符串转Bool值，供Bool()函数调用。
-// 添加了一些strconv.ParseFloat不支持但又比较常用的字符串转换
+// 字符串转 bool 值，供 Bool() 函数调用。
+// 添加了一些 strconv.ParseFloat 不支持但又比较常用的字符串转换
 func str2Bool(str string) (bool, error) {
 	if val, err := strconv.ParseBool(str); err == nil {
 		return val, nil
@@ -35,15 +35,13 @@ func str2Bool(str string) (bool, error) {
 	}
 }
 
-// 将val转换成bool类型或是在无法转换的情况下返回error。
+// Bool 将 val 转换成 bool 类型或是在无法转换的情况下返回 error。
 // 以下值被可以被正确转换：
 //  123(true), 0(false),"-123"(true), "on"(true), "off"(false), "true"(true), "false"(false)
 func Bool(val interface{}) (bool, error) {
 	switch ret := val.(type) {
 	case bool:
 		return ret, nil
-	//case int, int8, int32, int64, float32, float64, uint, uint8, uint32, uint64:
-	//	return ret != 0, nil
 	case int:
 		return ret != 0, nil
 	case int8:
@@ -73,16 +71,15 @@ func Bool(val interface{}) (bool, error) {
 	}
 }
 
-// 将val转换成bool类型或是在无法转换的情况下返回def参数。
+// MustBool 将 val 转换成 bool 类型或是在无法转换的情况下返回 def 参数。
 func MustBool(val interface{}, def bool) bool {
-	if ret, err := Bool(val); err != nil {
-		return def
-	} else {
+	if ret, err := Bool(val); err == nil {
 		return ret
 	}
+	return def
 }
 
-// 将val转换成uint64类型或是在无法转换的情况下返回error。
+// Uint64 将 val 转换成 uint64 类型或是在无法转换的情况下返回 error。
 // 将一个有符号整数转换成无符号整数，负数将返回错误，正数和零正常转换
 func Uint64(val interface{}) (uint64, error) {
 	switch ret := val.(type) {
@@ -144,16 +141,15 @@ func Uint64(val interface{}) (uint64, error) {
 	}
 }
 
-// 将val转换成uint64类型或是在无法转换的情况下返回def参数。
+// MustUint64 将 val 转换成 uint64 类型或是在无法转换的情况下返回 def 参数。
 func MustUint64(val interface{}, def uint64) uint64 {
-	if ret, err := Uint64(val); err != nil {
-		return def
-	} else {
+	if ret, err := Uint64(val); err == nil {
 		return ret
 	}
+	return def
 }
 
-// 将val转换成uint类型或是在无法转换的情况下返回error。
+// Uint 将 val 转换成 uint 类型或是在无法转换的情况下返回 error。
 func Uint(val interface{}) (uint, error) {
 	if ret, err := Uint64(val); err != nil {
 		return 0, err
@@ -162,16 +158,15 @@ func Uint(val interface{}) (uint, error) {
 	}
 }
 
-// 将val转换成uint类型或是在无法转换的情况下返回def参数。
+// MustUint 将 val 转换成 uint 类型或是在无法转换的情况下返回 def 参数。
 func MustUint(val interface{}, def uint) uint {
-	if ret, err := Uint64(val); err != nil {
-		return def
-	} else {
+	if ret, err := Uint64(val); err == nil {
 		return uint(ret)
 	}
+	return def
 }
 
-// 将val转换成uint8类型或是在无法转换的情况下返回error。
+// Uint8 将 val 转换成 uint8 类型或是在无法转换的情况下返回 error。
 func Uint8(val interface{}) (uint8, error) {
 	if ret, err := Uint64(val); err != nil {
 		return 0, err
@@ -180,16 +175,15 @@ func Uint8(val interface{}) (uint8, error) {
 	}
 }
 
-// 将val转换成uint8类型或是在无法转换的情况下返回def参数。
+// MustUint8 将 val 转换成 uint8 类型或是在无法转换的情况下返回 def 参数。
 func MustUint8(val interface{}, def uint8) uint8 {
-	if ret, err := Uint64(val); err != nil {
-		return def
-	} else {
+	if ret, err := Uint64(val); err == nil {
 		return uint8(ret)
 	}
+	return def
 }
 
-// 将val转换成uint32类型或是在无法转换的情况下返回error。
+// Uint32 将 val 转换成 uint32 类型或是在无法转换的情况下返回 error。
 func Uint32(val interface{}) (uint32, error) {
 	if ret, err := Uint64(val); err != nil {
 		return 0, err
@@ -198,16 +192,15 @@ func Uint32(val interface{}) (uint32, error) {
 	}
 }
 
-// 将val转换成uint32类型或是在无法转换的情况下返回def参数。
+// MustUint32 将 val 转换成 uint32 类型或是在无法转换的情况下返回 def 参数。
 func MustUint32(val interface{}, def uint32) uint32 {
-	if ret, err := Uint64(val); err != nil {
-		return def
-	} else {
+	if ret, err := Uint64(val); err == nil {
 		return uint32(ret)
 	}
+	return def
 }
 
-// 将val转换成int64类型或是在无法转换的情况下返回error。
+// Int64 将 val 转换成 int64 类型或是在无法转换的情况下返回 error。
 func Int64(val interface{}) (int64, error) {
 	switch ret := val.(type) {
 	case int64:
@@ -233,9 +226,8 @@ func Int64(val interface{}) (int64, error) {
 	case bool:
 		if ret {
 			return 1, nil
-		} else {
-			return 0, nil
 		}
+		return 0, nil
 	case []byte:
 		if val, err := strconv.ParseFloat(string(ret), 32); err == nil {
 			return int64(val), nil
@@ -253,16 +245,15 @@ func Int64(val interface{}) (int64, error) {
 	}
 }
 
-// 将val转换成int64类型或是在无法转换的情况下返回def参数。
+// MustInt64 将 val 转换成 int64 类型或是在无法转换的情况下返回 def 参数。
 func MustInt64(val interface{}, def int64) int64 {
-	if ret, err := Int64(val); err != nil {
-		return def
-	} else {
+	if ret, err := Int64(val); err == nil {
 		return ret
 	}
+	return def
 }
 
-// 将val转换成int类型或是在无法转换的情况下返回error。
+// Int 将 val 转换成 int 类型或是在无法转换的情况下返回 error。
 func Int(val interface{}) (int, error) {
 	if ret, err := Int64(val); err != nil {
 		return -1, err
@@ -271,16 +262,15 @@ func Int(val interface{}) (int, error) {
 	}
 }
 
-// 将val转换成int类型或是在无法转换的情况下返回def参数。
+// MustInt 将 val 转换成 int 类型或是在无法转换的情况下返回 def 参数。
 func MustInt(val interface{}, def int) int {
-	if ret, err := Int64(val); err != nil {
-		return def
-	} else {
+	if ret, err := Int64(val); err == nil {
 		return int(ret)
 	}
+	return def
 }
 
-// 将val转换成int8类型或是在无法转换的情况下返回error。
+// Int8 将 val 转换成 int8 类型或是在无法转换的情况下返回 error。
 func Int8(val interface{}) (int8, error) {
 	if ret, err := Int64(val); err != nil {
 		return -1, err
@@ -289,16 +279,15 @@ func Int8(val interface{}) (int8, error) {
 	}
 }
 
-// 将val转换成int8类型或是在无法转换的情况下返回def参数。
+// MustInt8 将 val 转换成 int8 类型或是在无法转换的情况下返回 def 参数。
 func MustInt8(val interface{}, def int8) int8 {
-	if ret, err := Int64(val); err != nil {
-		return def
-	} else {
+	if ret, err := Int64(val); err == nil {
 		return int8(ret)
 	}
+	return def
 }
 
-// 将val转换成int32类型或是在无法转换的情况下返回error。
+// Int32 将 val 转换成 int32 类型或是在无法转换的情况下返回 error。
 func Int32(val interface{}) (int32, error) {
 	if ret, err := Int64(val); err != nil {
 		return -1, err
@@ -307,16 +296,15 @@ func Int32(val interface{}) (int32, error) {
 	}
 }
 
-// 将val转换成int32类型或是在无法转换的情况下返回def参数。
+// MustInt32 将 val 转换成 int32 类型或是在无法转换的情况下返回 def 参数。
 func MustInt32(val interface{}, def int32) int32 {
 	if ret, err := Int64(val); err != nil {
-		return def
-	} else {
 		return int32(ret)
 	}
+	return def
 }
 
-// 将val转换成float64类型或是在无法转换的情况下返回error。
+// Float64 将 val 转换成 float64 类型或是在无法转换的情况下返回 error。
 func Float64(val interface{}) (float64, error) {
 	switch ret := val.(type) {
 	case float64:
@@ -342,9 +330,8 @@ func Float64(val interface{}) (float64, error) {
 	case bool:
 		if ret {
 			return 1.0, nil
-		} else {
-			return 0.0, nil
 		}
+		return 0.0, nil
 	case []byte:
 		if val, err := strconv.ParseFloat(string(ret), 64); err == nil {
 			return float64(val), nil
@@ -362,16 +349,15 @@ func Float64(val interface{}) (float64, error) {
 	}
 }
 
-// 将val转换成float64类型或是在无法转换的情况下返回def参数。
+// MustFloat64 将 val 转换成 float64 类型或是在无法转换的情况下返回 def 参数。
 func MustFloat64(val interface{}, def float64) float64 {
-	if ret, err := Float64(val); err != nil {
-		return def
-	} else {
+	if ret, err := Float64(val); err == nil {
 		return ret
 	}
+	return def
 }
 
-// 将val转换成float32类型或是在无法转换的情况下返回error。
+// Float32 将 val 转换成 float32 类型或是在无法转换的情况下返回 error。
 func Float32(val interface{}) (float32, error) {
 	if ret, err := Float64(val); err != nil {
 		return -1.0, err
@@ -380,16 +366,15 @@ func Float32(val interface{}) (float32, error) {
 	}
 }
 
-// 将val转换成float32类型或是在无法转换的情况下返回def参数。
+// MustFloat32 将 val 转换成 float32 类型或是在无法转换的情况下返回 def 参数。
 func MustFloat32(val interface{}, def float32) float32 {
-	if ret, err := Float64(val); err != nil {
-		return def
-	} else {
+	if ret, err := Float64(val); err == nil {
 		return float32(ret)
 	}
+	return def
 }
 
-// 将val转换成string类型或是在无法转换的情况下返回error。
+// String 将 val 转换成 string 类型或是在无法转换的情况下返回 error。
 func String(val interface{}) (string, error) {
 	switch ret := val.(type) {
 	case string:
@@ -427,16 +412,15 @@ func String(val interface{}) (string, error) {
 	}
 }
 
-// 将val转换成string类型或是在无法转换的情况下返回def参数。
+// MustString 将 val 转换成 string 类型或是在无法转换的情况下返回 def 参数。
 func MustString(val interface{}, def string) string {
-	if ret, err := String(val); err != nil {
-		return def
-	} else {
+	if ret, err := String(val); err == nil {
 		return ret
 	}
+	return def
 }
 
-// 将val转换成[]byte类型或是在无法转换的情况下返回error。
+// Bytes 将 val 转换成 []byte 类型或是在无法转换的情况下返回 error。
 func Bytes(val interface{}) ([]byte, error) {
 	switch ret := val.(type) {
 	case []byte:
@@ -470,19 +454,19 @@ func Bytes(val interface{}) ([]byte, error) {
 	}
 }
 
-// 将val转换成[]byte类型或是在无法转换的情况下返回def参数。
+// MustBytes 将 val 转换成 []byte 类型或是在无法转换的情况下返回 def 参数。
 func MustBytes(val interface{}, def []byte) []byte {
-	if ret, err := Bytes(val); err != nil {
-		return def
-	} else {
+	if ret, err := Bytes(val); err == nil {
 		return ret
 	}
+	return def
 }
 
-// 将val转换成slice类型或是在无法转换的情况下返回error。
-// []int, []interface{}以及数组都可以转换。
-// []byte("123")返回[]interface{}{byte(49),byte(50),byte(51)}
-// "123"返回[]interface{}{rune(49),rune(50),rune(51)}
+// Slice 将 val 转换成 slice 类型或是在无法转换的情况下返回 error。
+//
+// []int, []interface{} 以及数组都可以转换。
+// []byte("123") 返回 []interface{}{byte(49),byte(50),byte(51)}
+// "123" 返回 []interface{}{rune(49),rune(50),rune(51)}
 func Slice(val interface{}) ([]interface{}, error) {
 	switch data := val.(type) {
 	case []interface{}:
@@ -558,11 +542,10 @@ func Slice(val interface{}) ([]interface{}, error) {
 	}
 }
 
-// 将val转换成slice类型或是在无法转换的情况下返回def参数。
+// MustSlice 将 val 转换成 slice 类型或是在无法转换的情况下返回 def 参数。
 func MustSlice(val interface{}, def []interface{}) []interface{} {
-	if ret, err := Slice(val); err != nil {
-		return def
-	} else {
+	if ret, err := Slice(val); err == nil {
 		return ret
 	}
+	return def
 }
