@@ -20,9 +20,9 @@ func defaultFieldConvert(src string) string {
 }
 
 // 将 obj 对象转换成 map[string]interface{} 格式的数据
-func obj2Map(obj interface{}, maps *map[string]interface{}, conv FieldConvert) error {
+func obj2Map(obj interface{}, maps map[string]interface{}, conv FieldConvert) error {
 	objVal := reflect.ValueOf(obj)
-	if objVal.Kind() == reflect.Ptr { // 如果是指针，则获取指向的对象
+	for objVal.Kind() == reflect.Ptr { // 如果是指针，则获取指向的对象
 		objVal = objVal.Elem()
 	}
 
@@ -48,10 +48,10 @@ func obj2Map(obj interface{}, maps *map[string]interface{}, conv FieldConvert) e
 			fallthrough
 		case fieldType.Type.Kind() == reflect.Struct: // 嵌套类型
 			m := make(map[string]interface{})
-			err = obj2Map(fieldVal.Interface(), &m, conv)
-			(*maps)[conv(fieldType.Name)] = m
+			err = obj2Map(fieldVal.Interface(), m, conv)
+			maps[conv(fieldType.Name)] = m
 		default:
-			(*maps)[conv(fieldType.Name)] = fieldVal.Interface()
+			maps[conv(fieldType.Name)] = fieldVal.Interface()
 		}
 		if err != nil {
 			return err
@@ -68,7 +68,7 @@ func Obj2Map(obj interface{}, conv FieldConvert) (map[string]interface{}, error)
 	if conv == nil {
 		conv = defaultFieldConvert
 	}
-	return ret, obj2Map(obj, &ret, conv)
+	return ret, obj2Map(obj, ret, conv)
 }
 
 // Map2Obj 将 map 中的数据转换成一个结构中的数据。

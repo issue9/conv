@@ -11,18 +11,18 @@ import (
 	"github.com/issue9/assert"
 )
 
-type a1 struct {
+type A1 struct {
 	Id   int
 	Name string
 }
 
 type b1 struct {
-	a1
+	A1
 	Password string
 }
 
 type c1 struct {
-	sub      *a1
+	sub      *A1
 	Sub      *b1
 	Password string
 }
@@ -46,7 +46,7 @@ func TestMap2Obj(t *testing.T) {
 	}
 
 	// 包含匿名元素
-	obja := &a1{}
+	obja := &A1{}
 	err := Map2Obj(m, obja, nil)
 	as.Nil(err)
 	as.Equal(obja.Id, 5)
@@ -93,14 +93,14 @@ func TestObj2Map(t *testing.T) {
 	as := assert.New(t)
 
 	// 普通
-	obja := &a1{6, "admin"}
+	obja := &A1{6, "admin"}
 	m, err := Obj2Map(obja, nil)
 	as.Nil(err)
 	as.Equal(m["Id"], 6)
 	as.Equal(m["Name"], "admin")
 
 	// 包含匿名字段
-	objb := &b1{a1{6, "admin"}, "password"}
+	objb := &b1{A1{6, "admin"}, "password"}
 	m, err = Obj2Map(objb, nil)
 	as.Nil(err)
 	as.Equal(m["Id"], 6)
@@ -108,7 +108,7 @@ func TestObj2Map(t *testing.T) {
 	as.Equal(m["Password"], "password")
 
 	// 包含子元素
-	objc := &c1{sub: &a1{6, "admin"}, Sub: &b1{a1{5, "test"}, "b-password"}, Password: "password"}
+	objc := &c1{sub: &A1{6, "admin"}, Sub: &b1{A1{5, "test"}, "b-password"}, Password: "password"}
 	m, err = Obj2Map(objc, nil)
 	as.Nil(err)
 	as.Equal(m["Password"], "password")
