@@ -49,6 +49,16 @@ func TestValue(t *testing.T) {
 	a.NotError(Value(s7, reflect.ValueOf(&t7)))
 	a.Equal(int64(0), t7)
 
+	s8 := byte('1')
+	t8 := byte('2')
+	a.NotError(Value(s8, reflect.ValueOf(&t8)))
+	a.Equal(byte('1'), t8)
+
+	s9 := byte('1')
+	t9 := int('2')
+	a.NotError(Value(s9, reflect.ValueOf(&t9)))
+	a.Equal(49, t9)
+
 	// 无法转换的
 	s20 := "1a23"
 	t20 := 444

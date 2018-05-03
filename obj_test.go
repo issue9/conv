@@ -12,7 +12,7 @@ import (
 )
 
 type A1 struct {
-	Id   int
+	ID   int
 	Name string
 }
 
@@ -41,7 +41,7 @@ func TestMap2Obj(t *testing.T) {
 
 	// 一般
 	m := map[string]interface{}{
-		"Id":   5,
+		"ID":   5,
 		"Name": "admin",
 	}
 
@@ -49,11 +49,11 @@ func TestMap2Obj(t *testing.T) {
 	obja := &A1{}
 	err := Map2Obj(m, obja, nil)
 	as.Nil(err)
-	as.Equal(obja.Id, 5)
+	as.Equal(obja.ID, 5)
 	as.Equal(obja.Name, "admin")
 
 	m = map[string]interface{}{
-		"Id":       5,
+		"ID":       5,
 		"Name":     "admin",
 		"Password": "password",
 		"lower":    "lower",
@@ -61,7 +61,7 @@ func TestMap2Obj(t *testing.T) {
 	objb := &b1{}
 	err = Map2Obj(m, objb, nil)
 	as.Nil(err)
-	as.Equal(objb.Id, 5)
+	as.Equal(objb.ID, 5)
 	as.Equal(objb.Name, "admin")
 	as.Equal(objb.Password, "password")
 
@@ -70,7 +70,7 @@ func TestMap2Obj(t *testing.T) {
 	m = map[string]interface{}{
 		"Password": "password",
 		"Sub": map[string]interface{}{
-			"Id":       6,
+			"ID":       6,
 			"Name":     "test",
 			"Password": "sub-password",
 		},
@@ -78,7 +78,7 @@ func TestMap2Obj(t *testing.T) {
 	err = Map2Obj(m, objc, nil)
 	as.Nil(err)
 	as.Equal(objc.Password, "password")
-	as.Equal(objc.Sub.Id, 6)
+	as.Equal(objc.Sub.ID, 6)
 	as.Equal(objc.Sub.Password, "sub-password")
 
 	// 带转换函数
@@ -96,14 +96,14 @@ func TestObj2Map(t *testing.T) {
 	obja := &A1{6, "admin"}
 	m, err := Obj2Map(obja, nil)
 	as.Nil(err)
-	as.Equal(m["Id"], 6)
+	as.Equal(m["ID"], 6)
 	as.Equal(m["Name"], "admin")
 
 	// 包含匿名字段
 	objb := &b1{A1{6, "admin"}, "password"}
 	m, err = Obj2Map(objb, nil)
 	as.Nil(err)
-	as.Equal(m["Id"], 6)
+	as.Equal(m["ID"], 6)
 	as.Equal(m["Name"], "admin")
 	as.Equal(m["Password"], "password")
 
@@ -114,7 +114,7 @@ func TestObj2Map(t *testing.T) {
 	as.Equal(m["Password"], "password")
 	sub := m["Sub"].(map[string]interface{})
 	as.Equal(sub["Password"], "b-password")
-	as.Equal(sub["Id"], 5)
+	as.Equal(sub["ID"], 5)
 	as.Equal(sub["Name"], "test")
 
 	// 带转换函数

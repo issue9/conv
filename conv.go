@@ -151,11 +151,11 @@ func MustUint64(val interface{}, def uint64) uint64 {
 
 // Uint 将 val 转换成 uint 类型或是在无法转换的情况下返回 error。
 func Uint(val interface{}) (uint, error) {
-	if ret, err := Uint64(val); err != nil {
+	ret, err := Uint64(val)
+	if err != nil {
 		return 0, err
-	} else {
-		return uint(ret), nil
 	}
+	return uint(ret), nil
 }
 
 // MustUint 将 val 转换成 uint 类型或是在无法转换的情况下返回 def 参数。
@@ -168,11 +168,11 @@ func MustUint(val interface{}, def uint) uint {
 
 // Uint8 将 val 转换成 uint8 类型或是在无法转换的情况下返回 error。
 func Uint8(val interface{}) (uint8, error) {
-	if ret, err := Uint64(val); err != nil {
+	ret, err := Uint64(val)
+	if err != nil {
 		return 0, err
-	} else {
-		return uint8(ret), nil
 	}
+	return uint8(ret), nil
 }
 
 // MustUint8 将 val 转换成 uint8 类型或是在无法转换的情况下返回 def 参数。
@@ -185,11 +185,11 @@ func MustUint8(val interface{}, def uint8) uint8 {
 
 // Uint32 将 val 转换成 uint32 类型或是在无法转换的情况下返回 error。
 func Uint32(val interface{}) (uint32, error) {
-	if ret, err := Uint64(val); err != nil {
+	ret, err := Uint64(val)
+	if err != nil {
 		return 0, err
-	} else {
-		return uint32(ret), nil
 	}
+	return uint32(ret), nil
 }
 
 // MustUint32 将 val 转换成 uint32 类型或是在无法转换的情况下返回 def 参数。
@@ -229,17 +229,17 @@ func Int64(val interface{}) (int64, error) {
 		}
 		return 0, nil
 	case []byte:
-		if val, err := strconv.ParseFloat(string(ret), 32); err == nil {
+		val, err := strconv.ParseFloat(string(ret), 32)
+		if err == nil {
 			return int64(val), nil
-		} else {
-			return -1, typeError(val, "int64")
 		}
+		return -1, typeError(val, "int64")
 	case string:
-		if val, err := strconv.ParseFloat(ret, 32); err == nil {
+		val, err := strconv.ParseFloat(ret, 32)
+		if err == nil {
 			return int64(val), nil
-		} else {
-			return -1, typeError(val, "int64")
 		}
+		return -1, typeError(val, "int64")
 	default:
 		return -1, typeError(ret, "int64")
 	}
@@ -255,11 +255,11 @@ func MustInt64(val interface{}, def int64) int64 {
 
 // Int 将 val 转换成 int 类型或是在无法转换的情况下返回 error。
 func Int(val interface{}) (int, error) {
-	if ret, err := Int64(val); err != nil {
+	ret, err := Int64(val)
+	if err != nil {
 		return -1, err
-	} else {
-		return int(ret), err
 	}
+	return int(ret), err
 }
 
 // MustInt 将 val 转换成 int 类型或是在无法转换的情况下返回 def 参数。
@@ -272,11 +272,11 @@ func MustInt(val interface{}, def int) int {
 
 // Int8 将 val 转换成 int8 类型或是在无法转换的情况下返回 error。
 func Int8(val interface{}) (int8, error) {
-	if ret, err := Int64(val); err != nil {
+	ret, err := Int64(val)
+	if err != nil {
 		return -1, err
-	} else {
-		return int8(ret), err
 	}
+	return int8(ret), err
 }
 
 // MustInt8 将 val 转换成 int8 类型或是在无法转换的情况下返回 def 参数。
@@ -289,11 +289,11 @@ func MustInt8(val interface{}, def int8) int8 {
 
 // Int32 将 val 转换成 int32 类型或是在无法转换的情况下返回 error。
 func Int32(val interface{}) (int32, error) {
-	if ret, err := Int64(val); err != nil {
+	ret, err := Int64(val)
+	if err != nil {
 		return -1, err
-	} else {
-		return int32(ret), err
 	}
+	return int32(ret), err
 }
 
 // MustInt32 将 val 转换成 int32 类型或是在无法转换的情况下返回 def 参数。
@@ -333,17 +333,17 @@ func Float64(val interface{}) (float64, error) {
 		}
 		return 0.0, nil
 	case []byte:
-		if val, err := strconv.ParseFloat(string(ret), 64); err == nil {
+		val, err := strconv.ParseFloat(string(ret), 64)
+		if err == nil {
 			return float64(val), nil
-		} else {
-			return -1, typeError(val, "float64")
 		}
+		return -1, typeError(val, "float64")
 	case string:
-		if val, err := strconv.ParseFloat(ret, 64); err == nil {
+		val, err := strconv.ParseFloat(ret, 64)
+		if err == nil {
 			return float64(val), nil
-		} else {
-			return -1, typeError(val, "float64")
 		}
+		return -1, typeError(val, "float64")
 	default:
 		return -1, typeError(ret, "float64")
 	}
@@ -359,11 +359,11 @@ func MustFloat64(val interface{}, def float64) float64 {
 
 // Float32 将 val 转换成 float32 类型或是在无法转换的情况下返回 error。
 func Float32(val interface{}) (float32, error) {
-	if ret, err := Float64(val); err != nil {
+	ret, err := Float64(val)
+	if err != nil {
 		return -1.0, err
-	} else {
-		return float32(ret), nil
 	}
+	return float32(ret), nil
 }
 
 // MustFloat32 将 val 转换成 float32 类型或是在无法转换的情况下返回 def 参数。
