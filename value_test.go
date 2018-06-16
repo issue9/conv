@@ -59,6 +59,16 @@ func TestValue(t *testing.T) {
 	a.NotError(Value(s9, reflect.ValueOf(&t9)))
 	a.Equal(49, t9)
 
+	var s10 interface{}
+	s10 = '1'
+	t10 := int('2')
+	a.NotError(Value(s10, reflect.ValueOf(&t10)))
+	a.Equal(49, t10)
+
+	t11 := int('2')
+	a.NotError(Value(nil, reflect.ValueOf(&t11)))
+	a.Equal(0, t11)
+
 	// 无法转换的
 	s20 := "1a23"
 	t20 := 444

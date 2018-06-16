@@ -12,6 +12,8 @@ import (
 
 // Value 将 source 的值保存到成 target 中。
 //
+// 如果 source 为 nil，则会将 target 的值设置为其默认的零值。
+//
 // 若类型不能直接转换，会尝试其它种方式转换，比如 strconv.ParseInt() 等。
 func Value(source interface{}, target reflect.Value) error {
 	kind := target.Kind()
@@ -22,11 +24,16 @@ func Value(source interface{}, target reflect.Value) error {
 	}
 
 	if !target.CanSet() {
-		return fmt.Errorf("无法改变target的值[%v]", target.Kind())
+		return fmt.Errorf("无法改变 target 的值[%v]", target.Kind())
 	}
 
 	if !target.IsValid() {
-		return errors.New("无效的target值")
+		return errors.New("无效的 target 值")
+	}
+
+	if source == nil {
+		target.Set(reflect.Zero(target.Type()))
+		return nil
 	}
 
 	switch kind {
@@ -64,7 +71,7 @@ func Value(source interface{}, target reflect.Value) error {
 		sourceValue := reflect.ValueOf(source)
 		targetType := target.Type()
 		if !sourceValue.Type().ConvertibleTo(targetType) {
-			return fmt.Errorf("当前类型[%v]无法转换成目标类型:[%v]", sourceValue.Type(), targetType)
+			return typeError(source, targetType.String())
 		}
 		target.Set(sourceValue.Convert(targetType))
 	}
