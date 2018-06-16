@@ -69,6 +69,10 @@ func TestValue(t *testing.T) {
 	a.NotError(Value(nil, reflect.ValueOf(&t11)))
 	a.Equal(0, t11)
 
+	t12 := "22"
+	a.NotError(Value(nil, reflect.ValueOf(&t12)))
+	a.Equal("", t12)
+
 	// 无法转换的
 	s20 := "1a23"
 	t20 := 444
