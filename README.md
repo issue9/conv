@@ -1,4 +1,6 @@
-conv [![Build Status](https://travis-ci.org/issue9/conv.svg?branch=master)](https://travis-ci.org/issue9/conv)
+conv
+[![Build Status](https://travis-ci.org/issue9/conv.svg?branch=master)](https://travis-ci.org/issue9/conv)
+[![Build status](https://ci.appveyor.com/api/projects/status/0981yn86igx1jm1q?svg=true)](https://ci.appveyor.com/project/caixw/conv)
 ======
 
 conv包提供了各个类型之间的转换：
