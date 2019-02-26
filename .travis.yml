@@ -3,9 +3,11 @@ language: go
 os:
   - linux
   - osx
+  - windows
 
 go:
   - tip
+  - 1.12
   - 1.11
 
 script:
@@ -13,3 +15,7 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+matrix:
+  allow_failures:
+    - go: tip
