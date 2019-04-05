@@ -381,6 +381,8 @@ func String(val interface{}) (string, error) {
 		return ret, nil
 	case []byte:
 		return string(ret), nil
+	case []rune:
+		return string(ret), nil
 	case int64:
 		return strconv.FormatInt(ret, 10), nil
 	case int:
