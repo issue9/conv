@@ -24,10 +24,13 @@ func TestValue(t *testing.T) {
 	a.NotError(Value(s2, reflect.ValueOf(&t2)))
 	a.Equal(s2, t2)
 
-	s3 := "abc"
+	s3 := "34"
 	t3 := []byte("def")
 	a.NotError(Value(s3, reflect.ValueOf(&t3)))
 	a.Equal(s3, string(t3))
+	s3_0 := []string{"1", "2"}
+	a.NotError(Value(s3_0, reflect.ValueOf(&t3)))
+	a.Equal([]byte{1, 2}, string(t3))
 
 	s4 := []byte("abc")
 	t4 := "def"
@@ -95,6 +98,11 @@ func TestValue(t *testing.T) {
 	t16 := []int{1, 2, 3}
 	a.NotError(Value(s16, reflect.ValueOf(&t16)))
 	a.Equal([]int{4, 5}, t16)
+
+	s17 := []string{"4", "5"}
+	t17 := []byte{1, 2, 3}
+	a.NotError(Value(s17, reflect.ValueOf(&t17)))
+	a.Equal([]byte{4, 5}, t17)
 
 	// 无法转换的
 	s20 := "1a23"
