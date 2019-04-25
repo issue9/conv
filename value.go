@@ -67,14 +67,68 @@ func Value(source interface{}, target reflect.Value) error {
 			return err
 		}
 		target.SetString(val)
-	default:
-		sourceValue := reflect.ValueOf(source)
-		targetType := target.Type()
-		if !sourceValue.Type().ConvertibleTo(targetType) {
-			return typeError(source, targetType.String())
+	case reflect.Slice:
+		s := reflect.ValueOf(source)
+		sk := s.Kind()
+		tek := target.Type().Elem().Kind()
+
+		// []byte []rune 和 string 之间可以互相转换
+		if sk == reflect.String && (tek == reflect.Uint8 || tek == reflect.Int32) {
+			return valueDefault(source, target)
 		}
-		target.Set(sourceValue.Convert(targetType))
+
+		if sk != reflect.Array && sk != reflect.Slice {
+			return typeError(source, "slice")
+		}
+
+		l := s.Len()
+		tmp := reflect.MakeSlice(target.Type(), l, l)
+		for i := 0; i < l; i++ {
+			si := s.Index(i).Interface()
+			if err := Value(si, tmp.Index(i)); err != nil {
+				return err
+			}
+		}
+		target.Set(tmp)
+	case reflect.Array:
+		s := reflect.ValueOf(source)
+		sk := s.Kind()
+		tek := target.Type().Elem().Kind()
+
+		// []byte []rune 和 string 之间可以互相转换
+		if sk == reflect.String && (tek == reflect.Uint8 || tek == reflect.Int32) {
+			return valueDefault(source, target)
+		}
+
+		if sk != reflect.Array && sk != reflect.Slice {
+			return typeError(source, "array")
+		}
+
+		l := s.Len()
+		if l != target.Len() {
+			return fmt.Errorf("两者长度不一样，无法转换 %d: %d", l, target.Len())
+		}
+
+		for i := 0; i < l; i++ {
+			si := s.Index(i).Interface()
+			if err := Value(si, target.Index(i)); err != nil {
+				return err
+			}
+		}
+	default:
+		return valueDefault(source, target)
 	}
+
+	return nil
+}
+
+func valueDefault(source interface{}, target reflect.Value) error {
+	sourceValue := reflect.ValueOf(source)
+	targetType := target.Type()
+	if !sourceValue.Type().ConvertibleTo(targetType) {
+		return typeError(source, targetType.String())
+	}
+	target.Set(sourceValue.Convert(targetType))
 
 	return nil
 }

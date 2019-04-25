@@ -73,6 +73,29 @@ func TestValue(t *testing.T) {
 	a.NotError(Value(nil, reflect.ValueOf(&t12)))
 	a.Equal("", t12)
 
+	s13 := []string{"4", "5", "6"}
+	t13 := []int{1, 2}
+	a.NotError(Value(s13, reflect.ValueOf(&t13)))
+	a.Equal([]int{4, 5, 6}, t13)
+
+	// array 转换
+	s14 := []string{"4", "5"}
+	t14 := [2]int{1, 2}
+	a.NotError(Value(s14, reflect.ValueOf(&t14)))
+	a.Equal([]int{4, 5}, t14)
+
+	// array 长度不一样，无法转换
+	s15 := []string{"4", "5", "6"}
+	t15 := [2]int{1, 2}
+	a.Error(Value(s15, reflect.ValueOf(&t15)))
+	a.Equal([]int{1, 2}, t15)
+
+	// slice 长度不同，可以转换
+	s16 := []string{"4", "5"}
+	t16 := []int{1, 2, 3}
+	a.NotError(Value(s16, reflect.ValueOf(&t16)))
+	a.Equal([]int{4, 5}, t16)
+
 	// 无法转换的
 	s20 := "1a23"
 	t20 := 444
