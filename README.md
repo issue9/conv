@@ -23,7 +23,6 @@ go get github.com/issue9/conv
 [![Go Walker](http://gowalker.org/api/v1/badge)](http://gowalker.org/github.com/issue9/conv)
 [![GoDoc](https://godoc.org/github.com/issue9/conv?status.svg)](https://godoc.org/github.com/issue9/conv)
 
-
 版权
 ----
 
