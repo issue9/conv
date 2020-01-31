@@ -1,6 +1,4 @@
-// Copyright 2014 by caixw, All rights reserved.
-// Use of this source code is governed by a MIT
-// license that can be found in the LICENSE file.
+// SPDX-License-Identifier: MIT
 
 // Package conv 提供了基础的类型转换功能。会尽最大可能地
 // 将当前的值转换成指定类型的值。
