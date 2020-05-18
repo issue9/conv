@@ -30,6 +30,9 @@ func TestMustBool(t *testing.T) {
 	// 不可解析
 	a.False(MustBool("str", false))
 	a.True(MustBool(";adf", true))
+	a.PanicString(func() {
+		MustBool("str")
+	}, "[string:str]无法转换成[bool]类型")
 }
 
 func TestMustInt(t *testing.T) {
@@ -51,6 +54,9 @@ func TestMustInt(t *testing.T) {
 	// 不可解析
 	a.Equal(MustInt(";sdf", 45), 45)
 	a.Equal(MustInt("str", 45), 45)
+	a.PanicString(func() {
+		MustInt(";str")
+	}, "[string:;str]无法转换成[int]类型")
 }
 
 func TestMustInt64(t *testing.T) {
@@ -72,6 +78,9 @@ func TestMustInt64(t *testing.T) {
 	// 不可解析
 	a.Equal(MustInt64(";sdf", 45), int64(45))
 	a.Equal(MustInt64("str", 45), 45)
+	a.PanicString(func() {
+		MustInt64("str")
+	}, "[string:str]无法转换成[int64]类型")
 }
 
 func TestMustUint32(t *testing.T) {
@@ -92,6 +101,9 @@ func TestMustUint32(t *testing.T) {
 	a.Equal(MustUint32(-1.23, 99), uint32(99))
 	a.Equal(MustUint32(";sdf", 45), uint32(45))
 	a.Equal(MustUint32("str", 45), uint32(45))
+	a.PanicString(func() {
+		MustUint32("str")
+	}, "[string:str]无法转换成[uint32]类型")
 }
 
 func TestMustUint64(t *testing.T) {
@@ -113,6 +125,9 @@ func TestMustUint64(t *testing.T) {
 	a.Equal(MustUint64(-1.23, 99), uint64(99))
 	a.Equal(MustUint64(";sdf", 45), uint64(45))
 	a.Equal(MustUint64("str", 45), uint64(45))
+	a.PanicString(func() {
+		MustUint64("str")
+	}, "[string:str]无法转换成[uint64]类型")
 }
 
 func TestMustFloat32(t *testing.T) {
@@ -131,6 +146,9 @@ func TestMustFloat32(t *testing.T) {
 	// 不可解析
 	a.Equal(MustFloat32(";sdf", 45), 45)
 	a.Equal(MustFloat32("str", 45), 45)
+	a.PanicString(func() {
+		MustFloat32("str")
+	}, "[string:str]无法转换成[float32]类型")
 }
 
 func TestMustString(t *testing.T) {
@@ -144,6 +162,9 @@ func TestMustString(t *testing.T) {
 
 	// 不可解析
 	a.Equal(MustString([]int{1}, "22"), "22")
+	a.PanicString(func() {
+		MustString([]int{1})
+	}, "[[]int:[1]]无法转换成[string]类型")
 }
 
 func TestMustBytes(t *testing.T) {
@@ -156,6 +177,9 @@ func TestMustBytes(t *testing.T) {
 
 	// 不可解析
 	a.Equal(MustBytes([]int{1}, []byte("123")), []byte{49, 50, 51})
+	a.PanicString(func() {
+		MustBytes([]int{1})
+	}, "[[]int:[1]]无法转换成[bytes]类型")
 }
 
 func TestMustSlice(t *testing.T) {
@@ -174,6 +198,9 @@ func TestMustSlice(t *testing.T) {
 
 	// 不可解析
 	a.Equal(MustSlice(7, def), []interface{}{4, 5, 5})
+	a.PanicString(func() {
+		MustSlice(7)
+	}, "[int:7]无法转换成[slice]类型")
 }
 
 func TestBool(t *testing.T) {
