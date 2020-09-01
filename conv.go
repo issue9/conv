@@ -28,6 +28,18 @@ func str2Bool(str string) (bool, error) {
 		return true, nil
 	case "off":
 		return false, nil
+	case "true":
+		return true, nil
+	case "false":
+		return false, nil
+	case "yes":
+		return true, nil
+	case "no":
+		return false, nil
+	case "1":
+		return true, nil
+	case "0":
+		return false, nil
 	default:
 		return false, typeError(str, "bool")
 	}
