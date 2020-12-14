@@ -73,6 +73,7 @@ func TestMustInt64(t *testing.T) {
 	a.Equal(MustInt64(1.23, 99), int64(1))
 	a.Equal(MustInt64(-1.23, 99), int64(-1))
 	a.Equal(MustInt64([]byte("123"), 44), int64(123))
+	a.Equal(MustInt64([]byte("1607957811"), 44), int64(1607957811))
 	a.Equal(MustInt64("1"), 1)
 
 	// 不可解析

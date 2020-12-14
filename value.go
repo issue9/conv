@@ -8,7 +8,7 @@ import (
 	"reflect"
 )
 
-// Value 将 source 的值保存到成 target 中。
+// Value 将 source 的值保存到成 target 中
 //
 // 如果 source 为 nil，则会将 target 的值设置为其默认的零值。
 //

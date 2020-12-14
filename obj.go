@@ -9,6 +9,7 @@ import (
 )
 
 // FieldConvert 字段转换
+//
 // 用于 map 转换到一个对象实例或是从一个对象实例转换到 map 时，字段名称的转换。
 type FieldConvert func(src string) (dest string)
 
@@ -59,7 +60,9 @@ func obj2Map(obj interface{}, maps map[string]interface{}, conv FieldConvert) er
 	return nil
 }
 
-// Obj2Map 将 obj 转换成 map，只能转换可导出的数据。
+// Obj2Map 将 obj 转换成 map
+//
+// NOTE: 只能转换可导出的数据。
 func Obj2Map(obj interface{}, conv FieldConvert) (map[string]interface{}, error) {
 	ret := make(map[string]interface{})
 
@@ -69,7 +72,7 @@ func Obj2Map(obj interface{}, conv FieldConvert) (map[string]interface{}, error)
 	return ret, obj2Map(obj, ret, conv)
 }
 
-// Map2Obj 将 map 中的数据转换成一个结构中的数据。
+// Map2Obj 将 map 中的数据转换成一个结构中的数据
 func Map2Obj(src interface{}, dest interface{}, conv FieldConvert) error {
 	srcVal, destVal, conv, err := map2ObjCheck(src, dest, conv)
 	if err != nil {
