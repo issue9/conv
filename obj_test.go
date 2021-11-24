@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/issue9/assert"
+	"github.com/issue9/assert/v2"
 )
 
 type A1 struct {
@@ -35,7 +35,7 @@ func ToUpperFieldConv(str string) string {
 }
 
 func TestMap2Obj(t *testing.T) {
-	as := assert.New(t)
+	as := assert.New(t, false)
 
 	// 一般
 	m := map[string]interface{}{
@@ -88,7 +88,7 @@ func TestMap2Obj(t *testing.T) {
 }
 
 func TestObj2Map(t *testing.T) {
-	as := assert.New(t)
+	as := assert.New(t, false)
 
 	// 普通
 	obja := &A1{6, "admin"}

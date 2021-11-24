@@ -5,11 +5,11 @@ package conv
 import (
 	"testing"
 
-	"github.com/issue9/assert"
+	"github.com/issue9/assert/v2"
 )
 
 func TestMustBool(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	// 可解析
 	a.True(MustBool("on", false))
@@ -36,7 +36,7 @@ func TestMustBool(t *testing.T) {
 }
 
 func TestMustInt(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	// 可解析
 	a.Equal(MustInt("123", 456), 123)
@@ -61,7 +61,7 @@ func TestMustInt(t *testing.T) {
 
 func TestMustInt64(t *testing.T) {
 	// 可解析
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	a.Equal(MustInt64("123", 456), int64(123))
 	a.Equal(MustInt64(true, 5), int64(1))
@@ -85,7 +85,7 @@ func TestMustInt64(t *testing.T) {
 }
 
 func TestMustUint32(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 	// 可解析
 	a.Equal(MustUint32("123", 456), uint32(123))
 	a.Equal(MustUint32(true, 5), uint32(1))
@@ -108,7 +108,7 @@ func TestMustUint32(t *testing.T) {
 }
 
 func TestMustUint64(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	// 可解析
 	a.Equal(MustUint64("123", 456), uint64(123))
@@ -132,7 +132,7 @@ func TestMustUint64(t *testing.T) {
 }
 
 func TestMustFloat32(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 	// 可解析
 	a.Equal(MustFloat32("123", 456), float32(123))
 	a.Equal(MustFloat32(true, 5), float32(1))
@@ -153,7 +153,7 @@ func TestMustFloat32(t *testing.T) {
 }
 
 func TestMustString(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 	// 可解析
 	a.Equal(MustString(123, "222"), "123")
 	a.Equal(MustString(-11, "22"), "-11")
@@ -169,7 +169,7 @@ func TestMustString(t *testing.T) {
 }
 
 func TestMustBytes(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 	// 可解析
 	a.Equal(MustBytes("123", []byte("456")), []byte{49, 50, 51})
 	a.Equal(MustBytes(123, []byte("456")), []byte{49, 50, 51})
@@ -185,7 +185,7 @@ func TestMustBytes(t *testing.T) {
 
 func TestMustSlice(t *testing.T) {
 	def := []interface{}{4, 5, 5}
-	a := assert.New(t)
+	a := assert.New(t, false)
 	// 可解析
 	a.Equal(MustSlice([]int{1, 2, 3}, def), []interface{}{int(1), int(2), int(3)})
 	a.Equal(MustSlice([]uint64{1, 2, 3}, def), []interface{}{uint64(1), uint64(2), uint64(3)})
@@ -205,10 +205,11 @@ func TestMustSlice(t *testing.T) {
 }
 
 func TestBool(t *testing.T) {
+	a := assert.New(t, false)
 	fn := func(val interface{}, result bool) {
 		ret, err := Bool(val)
-		assert.Equal(t, ret, result)
-		assert.Nil(t, err)
+		a.Equal(ret, result)
+		a.Nil(err)
 	}
 
 	fn(5, true)
@@ -224,10 +225,12 @@ func TestBool(t *testing.T) {
 }
 
 func TestInt(t *testing.T) {
+	a := assert.New(t, false)
+
 	fn := func(val interface{}, result int) {
 		ret, err := Int(val)
-		assert.Nil(t, err)
-		assert.Equal(t, ret, result)
+		a.Nil(err)
+		a.Equal(ret, result)
 
 	}
 
@@ -244,10 +247,12 @@ func TestInt(t *testing.T) {
 }
 
 func TestInt64(t *testing.T) {
+	a := assert.New(t, false)
+
 	fn := func(val interface{}, result int64) {
 		ret, err := Int64(val)
-		assert.Nil(t, err)
-		assert.Equal(t, ret, result)
+		a.Nil(err)
+		a.Equal(ret, result)
 	}
 
 	fn(5, 5)
@@ -263,10 +268,12 @@ func TestInt64(t *testing.T) {
 }
 
 func TestUint(t *testing.T) {
+	a := assert.New(t, false)
+
 	fn := func(val interface{}, result uint) {
 		ret, err := Uint(val)
-		assert.Nil(t, err)
-		assert.Equal(t, ret, result)
+		a.Nil(err)
+		a.Equal(ret, result)
 	}
 
 	fn(5, 5)
@@ -279,10 +286,12 @@ func TestUint(t *testing.T) {
 }
 
 func TestUint64(t *testing.T) {
+	a := assert.New(t, false)
+
 	fn := func(val interface{}, result uint64) {
 		ret, err := Uint64(val)
-		assert.Nil(t, err)
-		assert.Equal(t, ret, result)
+		a.Nil(err)
+		a.Equal(ret, result)
 	}
 
 	fn(5, 5)
@@ -295,10 +304,12 @@ func TestUint64(t *testing.T) {
 }
 
 func TestFloat32(t *testing.T) {
+	a := assert.New(t, false)
+
 	fn := func(val interface{}, result float32) {
 		ret, err := Float32(val)
-		assert.Nil(t, err)
-		assert.Equal(t, ret, result)
+		a.Nil(err)
+		a.Equal(ret, result)
 	}
 
 	fn(5, 5)
@@ -311,10 +322,12 @@ func TestFloat32(t *testing.T) {
 }
 
 func TestString(t *testing.T) {
+	a := assert.New(t, false)
+
 	fn := func(val interface{}, result string) {
 		ret, err := String(val)
-		assert.Nil(t, err)
-		assert.Equal(t, ret, result)
+		a.Nil(err)
+		a.Equal(ret, result)
 	}
 
 	fn(5, "5")
@@ -327,10 +340,12 @@ func TestString(t *testing.T) {
 }
 
 func TestBytes(t *testing.T) {
+	a := assert.New(t, false)
+
 	fn := func(val interface{}, result []byte) {
 		ret, err := Bytes(val)
-		assert.Nil(t, err)
-		assert.Equal(t, ret, result)
+		a.Nil(err)
+		a.Equal(ret, result)
 	}
 
 	fn(11, []byte{49, 49})
@@ -340,10 +355,12 @@ func TestBytes(t *testing.T) {
 }
 
 func TestSlice(t *testing.T) {
+	a := assert.New(t, false)
+
 	fn := func(val interface{}, result []interface{}) {
 		ret, err := Slice(val)
-		assert.Nil(t, err)
-		assert.Equal(t, ret, result)
+		a.Nil(err)
+		a.Equal(ret, result)
 	}
 
 	fn("123", []interface{}{int32(49), int32(50), int32(51)})

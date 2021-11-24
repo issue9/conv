@@ -6,11 +6,11 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/issue9/assert"
+	"github.com/issue9/assert/v2"
 )
 
 func TestValue(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	s1 := int(5)
 	t1 := int8(7)
