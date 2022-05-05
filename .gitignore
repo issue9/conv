@@ -10,12 +10,13 @@ _obj
 _test
 
 
-*.exe
 *.test
 *.prof
 
-# vim
+# ide
 *.swp
+.idea/
+.vscode/
 
 # osx
 .DS_Store
