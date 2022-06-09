@@ -3,6 +3,7 @@
 package conv
 
 import (
+	"encoding"
 	"fmt"
 	"strconv"
 	"strings"
@@ -430,6 +431,8 @@ func MustFloat32(val interface{}, def ...float32) float32 {
 }
 
 // String 将 val 转换成 string 类型或是在无法转换的情况下返回 error
+//
+// NOTE: fmt.Stringer, ret.Error 和 encoding.TextMarshaler 都将被正确转换成字符串。
 func String(val interface{}) (string, error) {
 	switch ret := val.(type) {
 	case string:
@@ -464,6 +467,12 @@ func String(val interface{}) (string, error) {
 		return ret.String(), nil
 	case error:
 		return ret.Error(), nil
+	case encoding.TextMarshaler:
+		v, err := ret.MarshalText()
+		if err != nil {
+			return "", err
+		}
+		return string(v), nil
 	default:
 		return "", typeError(ret, "string")
 	}
