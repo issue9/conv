@@ -85,7 +85,7 @@ func Map2Obj(src interface{}, dest interface{}, conv FieldConvert) error {
 		k := keys[i]
 
 		if k.Kind() != reflect.String {
-			return errors.New("src 必须为 map[string]interface{} 类型")
+			return errors.New("conv: src 必须为 map[string]interface{} 类型")
 		}
 
 		srcItemVal := srcVal.MapIndex(k)
@@ -136,13 +136,13 @@ func Map2Obj(src interface{}, dest interface{}, conv FieldConvert) error {
 func map2ObjCheck(src interface{}, dest interface{}, conv FieldConvert) (srcVal reflect.Value, destVal reflect.Value, fun FieldConvert, err error) {
 	destVal = reflect.ValueOf(dest)
 	if destVal.Kind() != reflect.Ptr {
-		err = fmt.Errorf("dest 必须为一个 struct 对象的指针，实际类型为[%v]", destVal.Type())
+		err = fmt.Errorf("conv: dest 必须为一个 struct 对象的指针，实际类型为[%v]", destVal.Type())
 		return
 	}
 
 	destVal = destVal.Elem()
 	if destVal.Kind() != reflect.Struct {
-		err = fmt.Errorf("dest 必须为一个 struct 对象的指针，实际类型为[%v]", destVal.Type())
+		err = fmt.Errorf("conv: dest 必须为一个 struct 对象的指针，实际类型为[%v]", destVal.Type())
 		return
 	}
 
@@ -153,7 +153,7 @@ func map2ObjCheck(src interface{}, dest interface{}, conv FieldConvert) (srcVal 
 	}
 
 	if srcVal.Kind() != reflect.Map {
-		err = fmt.Errorf("src 必须为 map 类型或是 map 指针，实际类型为[%v]", srcVal.Type())
+		err = fmt.Errorf("conv: src 必须为 map 类型或是 map 指针，实际类型为[%v]", srcVal.Type())
 		return
 	}
 

@@ -22,11 +22,11 @@ func Value(source interface{}, target reflect.Value) error {
 	}
 
 	if !target.CanSet() {
-		return fmt.Errorf("无法改变 target 的值[%v]", target.Kind())
+		return fmt.Errorf("conv: 无法改变 target %s 的值", target.Kind())
 	}
 
 	if !target.IsValid() {
-		return errors.New("无效的 target 值")
+		return errors.New("conv: 无效的 target 值")
 	}
 
 	if source == nil {
@@ -104,7 +104,7 @@ func Value(source interface{}, target reflect.Value) error {
 
 		l := s.Len()
 		if l != target.Len() {
-			return fmt.Errorf("两者长度不一样，无法转换 %d: %d", l, target.Len())
+			return fmt.Errorf("conv: 两者长度不一样，无法转换 %d: %d", l, target.Len())
 		}
 
 		for i := 0; i < l; i++ {
