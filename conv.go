@@ -103,83 +103,51 @@ func UintOf[T constraints.Unsigned](val any) (T, error) {
 }
 
 // Uint64 将 val 转换成 uint64 类型或是在无法转换的情况下返回 error
-//
-// Deprecated: 请使用 UintOf 代替
 func Uint64(val any) (uint64, error) { return UintOf[uint64](val) }
 
 // MustUint64 将 val 转换成 uint64 类型或是在无法转换的情况下返回 def 参数
-//
-// Deprecated: 请使用 MustUintOf 代替
 func MustUint64(val any, def ...uint64) uint64 { return MustUintOf(val, def...) }
 
 // Uint 将 val 转换成 uint 类型或是在无法转换的情况下返回 error
-//
-// Deprecated: 请使用 UintOf 代替
 func Uint(val any) (uint, error) { return UintOf[uint](val) }
 
 // MustUint 将 val 转换成 uint 类型或是在无法转换的情况下返回 def 参数
-//
-// Deprecated: 请使用 MustUintOf 代替
 func MustUint(val any, def ...uint) uint { return MustUintOf(val, def...) }
 
 // Uint8 将 val 转换成 uint8 类型或是在无法转换的情况下返回 error
-//
-// Deprecated: 请使用 UintOf 代替
 func Uint8(val any) (uint8, error) { return UintOf[uint8](val) }
 
 // MustUint8 将 val 转换成 uint8 类型或是在无法转换的情况下返回 def 参数
-//
-// Deprecated: 请使用 MustUintOf 代替
 func MustUint8(val any, def ...uint8) uint8 { return MustUintOf(val, def...) }
 
 // Uint32 将 val 转换成 uint32 类型或是在无法转换的情况下返回 error
-//
-// Deprecated: 请使用 UintOf 代替
 func Uint32(val any) (uint32, error) { return UintOf[uint32](val) }
 
 // MustUint32 将 val 转换成 uint32 类型或是在无法转换的情况下返回 def 参数
-//
-// Deprecated: 请使用 MustUintOf 代替
 func MustUint32(val any, def ...uint32) uint32 { return MustUintOf(val, def...) }
 
 // Int64 将 val 转换成 int64 类型或是在无法转换的情况下返回 error
-//
-// Deprecated: 请使用 IntOf 代替
 func Int64(val any) (int64, error) { return IntOf[int64](val) }
 
 // MustInt64 将 val 转换成 int64 类型或是在无法转换的情况下返回 def 参数
-//
-// Deprecated: 请使用 MustIntOf 代替
 func MustInt64(val any, def ...int64) int64 { return MustIntOf(val, def...) }
 
 // Int 将 val 转换成 int 类型或是在无法转换的情况下返回 error
-//
-// Deprecated: 请使用 IntOf 代替
 func Int(val any) (int, error) { return IntOf[int](val) }
 
 // MustInt 将 val 转换成 int 类型或是在无法转换的情况下返回 def 参数
-//
-// Deprecated: 请使用 MustIntOf 代替
 func MustInt(val any, def ...int) int { return MustIntOf(val, def...) }
 
 // Int8 将 val 转换成 int8 类型或是在无法转换的情况下返回 error
-//
-// Deprecated: 请使用 IntOf 代替
 func Int8(val any) (int8, error) { return IntOf[int8](val) }
 
 // MustInt8 将 val 转换成 int8 类型或是在无法转换的情况下返回 def 参数
-//
-// Deprecated: 请使用 MustIntOf 代替
 func MustInt8(val any, def ...int8) int8 { return MustIntOf(val, def...) }
 
 // Int32 将 val 转换成 int32 类型或是在无法转换的情况下返回 error
-//
-// Deprecated: 请使用 IntOf 代替
 func Int32(val any) (int32, error) { return IntOf[int32](val) }
 
 // MustInt32 将 val 转换成 int32 类型或是在无法转换的情况下返回 def 参数
-//
-// Deprecated: 请使用 MustIntOf 代替
 func MustInt32(val any, def ...int32) int32 { return MustIntOf(val, def...) }
 
 // Float64 将 val 转换成 float64 类型或是在无法转换的情况下返回 error
