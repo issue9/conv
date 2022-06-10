@@ -367,3 +367,39 @@ func TestSlice(t *testing.T) {
 	fn([]int{1, 2, 3}, []interface{}{int(1), int(2), int(3)})
 	fn([]string{"1", "ss"}, []interface{}{"1", "ss"})
 }
+
+func TestSliceOf(t *testing.T) {
+	a := assert.New(t, false)
+
+	// int ==>int
+	ret1, err := SliceOf[int]([]int{1, 2, 3})
+	a.NotError(err).Equal(ret1, []int{1, 2, 3})
+
+	// int ==> int8
+	ret2, err := SliceOf[int8]([]int{1, 2, 3})
+	a.NotError(err).Equal(ret2, []int8{1, 2, 3})
+
+	// int ==> any
+	ret3, err := SliceOf[any]([]int{1, 2, 3})
+	a.NotError(err).Equal(ret3, []any{1, 2, 3})
+
+	// int ==> int8，溢出。
+	ret4, err := SliceOf[int8]([]int{1000, 2, 3})
+	a.NotError(err).Equal(ret4, []int8{-24, 2, 3})
+
+	// []string ==> int
+	ret5, err := SliceOf[int]([]string{"1", "2", "3"})
+	a.NotError(err).Equal(ret5, []int{1, 2, 3})
+
+	// any ==> int
+	ret6, err := SliceOf[int]([]any{1, 2, "3"})
+	a.NotError(err).Equal(ret6, []int{1, 2, 3})
+
+	// string ==> int
+	ret7, err := SliceOf[int]("123")
+	a.NotError(err).Equal(ret7, []int{'1', '2', '3'})
+
+	// string ==> byte
+	ret8, err := SliceOf[byte]("123")
+	a.NotError(err).Equal(ret8, []byte{'1', '2', '3'})
+}

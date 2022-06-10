@@ -5,6 +5,7 @@ package conv
 import (
 	"encoding"
 	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
 )
@@ -544,83 +545,57 @@ func MustBytes(val interface{}, def ...[]byte) []byte {
 // []byte("123") 返回 []interface{}{byte(49),byte(50),byte(51)}
 // "123" 返回 []interface{}{rune(49),rune(50),rune(51)}
 func Slice(val interface{}) ([]interface{}, error) {
-	switch data := val.(type) {
-	case []interface{}:
-		return data, nil
-	case []int:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	case []int8:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	case []int32:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	case []int64:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	case []uint:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	case []uint8:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	case []uint32:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	case []uint64:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	case []float32:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	case []string:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	case string:
-		ret := make([]interface{}, len(data))
-		for k, v := range data {
-			ret[k] = v
-		}
-		return ret, nil
-	default:
-		return nil, typeError(data, "slice")
-	}
+	return SliceOf[any](val)
 }
 
 // MustSlice 将 val 转换成 slice 类型或是在无法转换的情况下返回 def 参数
 func MustSlice(val interface{}, def ...[]interface{}) []interface{} {
-	if ret, err := Slice(val); err == nil {
+	return MustSliceOf[any](val, def...)
+}
+
+// SliceOf 将 val 转换成 []T
+//
+// 只要 val 是数组或是字符串，且其元素能转换成 T 类型即可。
+func SliceOf[T any](val any) ([]T, error) {
+	srcV := reflect.ValueOf(val)
+	switch srcV.Kind() {
+	case reflect.String:
+		dest := make([]T, srcV.Len())
+		destV := reflect.ValueOf(dest)
+		destT := destV.Type().Elem()
+		if reflect.TypeOf('a').ConvertibleTo(destT) {
+			for i := 0; i < srcV.Len(); i++ {
+				destV.Index(i).Set(srcV.Index(i).Convert(destT))
+			}
+		}
+
+		return dest, nil
+	case reflect.Slice, reflect.Array:
+		dest := make([]T, srcV.Len())
+		destV := reflect.ValueOf(dest)
+		destT := destV.Type().Elem()
+
+		for i := 0; i < srcV.Len(); i++ {
+			v := srcV.Index(i)
+
+			if v.Type().ConvertibleTo(destT) { // srcV 的项类型是确定的，比如 []any，可以包含任何类型。
+				destV.Index(i).Set(v.Convert(destT))
+			} else {
+				if err := Value(v.Interface(), destV.Index(i)); err != nil {
+					return nil, err
+				}
+			}
+		}
+
+		return dest, nil
+	default:
+		return nil, typeError(val, "slice")
+	}
+}
+
+// MustSliceOf 将 val 转换成 slice 类型或是在无法转换的情况下返回 def 参数
+func MustSliceOf[T any](val any, def ...[]T) []T {
+	if ret, err := SliceOf[T](val); err == nil {
 		return ret
 	}
 
