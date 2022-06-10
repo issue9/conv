@@ -19,7 +19,7 @@ func defaultFieldConvert(src string) string {
 }
 
 // 将 obj 对象转换成 map[string]interface{} 格式的数据
-func obj2Map(obj interface{}, maps map[string]interface{}, conv FieldConvert) error {
+func obj2Map(obj any, maps map[string]any, conv FieldConvert) error {
 	objVal := reflect.ValueOf(obj)
 	for objVal.Kind() == reflect.Ptr { // 如果是指针，则获取指向的对象
 		objVal = objVal.Elem()
@@ -46,7 +46,7 @@ func obj2Map(obj interface{}, maps map[string]interface{}, conv FieldConvert) er
 			fieldVal = fieldVal.Elem()
 			fallthrough
 		case fieldType.Type.Kind() == reflect.Struct: // 嵌套类型
-			m := make(map[string]interface{})
+			m := make(map[string]any)
 			err = obj2Map(fieldVal.Interface(), m, conv)
 			maps[conv(fieldType.Name)] = m
 		default:
@@ -63,8 +63,8 @@ func obj2Map(obj interface{}, maps map[string]interface{}, conv FieldConvert) er
 // Obj2Map 将 obj 转换成 map
 //
 // NOTE: 只能转换可导出的数据。
-func Obj2Map(obj interface{}, conv FieldConvert) (map[string]interface{}, error) {
-	ret := make(map[string]interface{})
+func Obj2Map(obj any, conv FieldConvert) (map[string]any, error) {
+	ret := make(map[string]any)
 
 	if conv == nil {
 		conv = defaultFieldConvert
@@ -73,7 +73,7 @@ func Obj2Map(obj interface{}, conv FieldConvert) (map[string]interface{}, error)
 }
 
 // Map2Obj 将 map 中的数据转换成一个结构中的数据
-func Map2Obj(src interface{}, dest interface{}, conv FieldConvert) error {
+func Map2Obj(src any, dest any, conv FieldConvert) error {
 	srcVal, destVal, conv, err := map2ObjCheck(src, dest, conv)
 	if err != nil {
 		return err
@@ -133,7 +133,7 @@ func Map2Obj(src interface{}, dest interface{}, conv FieldConvert) error {
 }
 
 // 对 map2Obj 各个参数的检测，并返回正确的值或是错误信息。
-func map2ObjCheck(src interface{}, dest interface{}, conv FieldConvert) (srcVal reflect.Value, destVal reflect.Value, fun FieldConvert, err error) {
+func map2ObjCheck(src any, dest any, conv FieldConvert) (srcVal reflect.Value, destVal reflect.Value, fun FieldConvert, err error) {
 	destVal = reflect.ValueOf(dest)
 	if destVal.Kind() != reflect.Ptr {
 		err = fmt.Errorf("conv: dest 必须为一个 struct 对象的指针，实际类型为[%v]", destVal.Type())

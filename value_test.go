@@ -60,7 +60,7 @@ func TestValue(t *testing.T) {
 	a.NotError(Value(s9, reflect.ValueOf(&t9)))
 	a.Equal(49, t9)
 
-	var s10 interface{}
+	var s10 any
 	s10 = '1'
 	t10 := int('2')
 	a.NotError(Value(s10, reflect.ValueOf(&t10)))

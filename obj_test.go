@@ -38,7 +38,7 @@ func TestMap2Obj(t *testing.T) {
 	as := assert.New(t, false)
 
 	// 一般
-	m := map[string]interface{}{
+	m := map[string]any{
 		"ID":   5,
 		"Name": "admin",
 	}
@@ -50,7 +50,7 @@ func TestMap2Obj(t *testing.T) {
 	as.Equal(obja.ID, 5)
 	as.Equal(obja.Name, "admin")
 
-	m = map[string]interface{}{
+	m = map[string]any{
 		"ID":       5,
 		"Name":     "admin",
 		"Password": "password",
@@ -65,9 +65,9 @@ func TestMap2Obj(t *testing.T) {
 
 	// 包含子元素
 	objc := &c1{Sub: &b1{}}
-	m = map[string]interface{}{
+	m = map[string]any{
 		"Password": "password",
-		"Sub": map[string]interface{}{
+		"Sub": map[string]any{
 			"ID":       6,
 			"Name":     "test",
 			"Password": "sub-password",
@@ -110,7 +110,7 @@ func TestObj2Map(t *testing.T) {
 	m, err = Obj2Map(objc, nil)
 	as.Nil(err)
 	as.Equal(m["Password"], "password")
-	sub := m["Sub"].(map[string]interface{})
+	sub := m["Sub"].(map[string]any)
 	as.Equal(sub["Password"], "b-password")
 	as.Equal(sub["ID"], 5)
 	as.Equal(sub["Name"], "test")
@@ -119,6 +119,6 @@ func TestObj2Map(t *testing.T) {
 	m, err = Obj2Map(objc, ToUpperFieldConv)
 	as.Nil(err)
 	as.Equal(m["PASSWORD"], "password")
-	sub = m["SUB"].(map[string]interface{})
+	sub = m["SUB"].(map[string]any)
 	as.Equal(sub["ID"], 5)
 }

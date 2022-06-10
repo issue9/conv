@@ -184,21 +184,21 @@ func TestMustBytes(t *testing.T) {
 }
 
 func TestMustSlice(t *testing.T) {
-	def := []interface{}{4, 5, 5}
+	def := []any{4, 5, 5}
 	a := assert.New(t, false)
 	// 可解析
-	a.Equal(MustSlice([]int{1, 2, 3}, def), []interface{}{int(1), int(2), int(3)})
-	a.Equal(MustSlice([]uint64{1, 2, 3}, def), []interface{}{uint64(1), uint64(2), uint64(3)})
-	a.Equal(MustSlice([]interface{}{"1", 2, 3.0}, def), []interface{}{"1", 2, 3.0})
-	a.Equal(MustSlice([]string{"1", "2", "3"}, def), []interface{}{"1", "2", "3"})
+	a.Equal(MustSlice([]int{1, 2, 3}, def), []any{int(1), int(2), int(3)})
+	a.Equal(MustSlice([]uint64{1, 2, 3}, def), []any{uint64(1), uint64(2), uint64(3)})
+	a.Equal(MustSlice([]any{"1", 2, 3.0}, def), []any{"1", 2, 3.0})
+	a.Equal(MustSlice([]string{"1", "2", "3"}, def), []any{"1", "2", "3"})
 
-	a.Equal(MustSlice([]byte("123"), def), []interface{}{byte(49), byte(50), byte(51)})
-	a.Equal(MustSlice("123", def), []interface{}{rune(49), rune(50), rune(51)})
-	a.Equal(MustSlice([]int{1, 2, 3}), []interface{}{int(1), int(2), int(3)})
-	a.Equal(MustSlice([]uint64{1, 2, 3}), []interface{}{uint64(1), uint64(2), uint64(3)})
+	a.Equal(MustSlice([]byte("123"), def), []any{byte(49), byte(50), byte(51)})
+	a.Equal(MustSlice("123", def), []any{rune(49), rune(50), rune(51)})
+	a.Equal(MustSlice([]int{1, 2, 3}), []any{int(1), int(2), int(3)})
+	a.Equal(MustSlice([]uint64{1, 2, 3}), []any{uint64(1), uint64(2), uint64(3)})
 
 	// 不可解析
-	a.Equal(MustSlice(7, def), []interface{}{4, 5, 5})
+	a.Equal(MustSlice(7, def), []any{4, 5, 5})
 	a.PanicString(func() {
 		MustSlice(7)
 	}, "conv: int:7 无法转换成 slice 类型")
@@ -206,7 +206,7 @@ func TestMustSlice(t *testing.T) {
 
 func TestBool(t *testing.T) {
 	a := assert.New(t, false)
-	fn := func(val interface{}, result bool) {
+	fn := func(val any, result bool) {
 		ret, err := Bool(val)
 		a.Equal(ret, result)
 		a.Nil(err)
@@ -227,7 +227,7 @@ func TestBool(t *testing.T) {
 func TestInt(t *testing.T) {
 	a := assert.New(t, false)
 
-	fn := func(val interface{}, result int) {
+	fn := func(val any, result int) {
 		ret, err := Int(val)
 		a.Nil(err)
 		a.Equal(ret, result)
@@ -249,7 +249,7 @@ func TestInt(t *testing.T) {
 func TestInt64(t *testing.T) {
 	a := assert.New(t, false)
 
-	fn := func(val interface{}, result int64) {
+	fn := func(val any, result int64) {
 		ret, err := Int64(val)
 		a.Nil(err)
 		a.Equal(ret, result)
@@ -270,7 +270,7 @@ func TestInt64(t *testing.T) {
 func TestUint(t *testing.T) {
 	a := assert.New(t, false)
 
-	fn := func(val interface{}, result uint) {
+	fn := func(val any, result uint) {
 		ret, err := Uint(val)
 		a.Nil(err)
 		a.Equal(ret, result)
@@ -288,7 +288,7 @@ func TestUint(t *testing.T) {
 func TestUint64(t *testing.T) {
 	a := assert.New(t, false)
 
-	fn := func(val interface{}, result uint64) {
+	fn := func(val any, result uint64) {
 		ret, err := Uint64(val)
 		a.Nil(err)
 		a.Equal(ret, result)
@@ -306,7 +306,7 @@ func TestUint64(t *testing.T) {
 func TestFloat32(t *testing.T) {
 	a := assert.New(t, false)
 
-	fn := func(val interface{}, result float32) {
+	fn := func(val any, result float32) {
 		ret, err := Float32(val)
 		a.Nil(err)
 		a.Equal(ret, result)
@@ -324,7 +324,7 @@ func TestFloat32(t *testing.T) {
 func TestString(t *testing.T) {
 	a := assert.New(t, false)
 
-	fn := func(val interface{}, result string) {
+	fn := func(val any, result string) {
 		ret, err := String(val)
 		a.Nil(err)
 		a.Equal(ret, result)
@@ -342,7 +342,7 @@ func TestString(t *testing.T) {
 func TestBytes(t *testing.T) {
 	a := assert.New(t, false)
 
-	fn := func(val interface{}, result []byte) {
+	fn := func(val any, result []byte) {
 		ret, err := Bytes(val)
 		a.Nil(err)
 		a.Equal(ret, result)
@@ -357,15 +357,15 @@ func TestBytes(t *testing.T) {
 func TestSlice(t *testing.T) {
 	a := assert.New(t, false)
 
-	fn := func(val interface{}, result []interface{}) {
+	fn := func(val any, result []any) {
 		ret, err := Slice(val)
 		a.Nil(err)
 		a.Equal(ret, result)
 	}
 
-	fn("123", []interface{}{int32(49), int32(50), int32(51)})
-	fn([]int{1, 2, 3}, []interface{}{int(1), int(2), int(3)})
-	fn([]string{"1", "ss"}, []interface{}{"1", "ss"})
+	fn("123", []any{int32(49), int32(50), int32(51)})
+	fn([]int{1, 2, 3}, []any{int(1), int(2), int(3)})
+	fn([]string{"1", "ss"}, []any{"1", "ss"})
 }
 
 func TestSliceOf(t *testing.T) {

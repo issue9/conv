@@ -13,7 +13,7 @@ import (
 // 如果 source 为 nil，则会将 target 的值设置为其默认的零值。
 //
 // 若类型不能直接转换，会尝试其它种方式转换，比如 strconv.ParseInt() 等。
-func Value(source interface{}, target reflect.Value) error {
+func Value(source any, target reflect.Value) error {
 	kind := target.Kind()
 
 	for kind == reflect.Ptr {
@@ -120,7 +120,7 @@ func Value(source interface{}, target reflect.Value) error {
 	return nil
 }
 
-func valueDefault(source interface{}, target reflect.Value) error {
+func valueDefault(source any, target reflect.Value) error {
 	sourceValue := reflect.ValueOf(source)
 	targetType := target.Type()
 	if !sourceValue.Type().ConvertibleTo(targetType) {
