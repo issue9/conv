@@ -14,9 +14,7 @@ import (
 type FieldConvert func(src string) (dest string)
 
 // FieldConvert 的默认实现
-func defaultFieldConvert(src string) string {
-	return src
-}
+func defaultFieldConvert(src string) string { return src }
 
 // 将 obj 对象转换成 map[string]interface{} 格式的数据
 func obj2Map(obj any, maps map[string]any, conv FieldConvert) error {

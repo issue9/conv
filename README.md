@@ -3,14 +3,17 @@ conv
 [![codecov](https://codecov.io/gh/issue9/conv/branch/master/graph/badge.svg)](https://codecov.io/gh/issue9/conv)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/issue9/conv)](https://pkg.go.dev/github.com/issue9/conv)
+![Go version](https://img.shields.io/github/go-mod/go-version/issue9/conv)
 ======
 
 conv包提供了各个类型之间的转换：
 
 ```go
-conv.MustInt("123", 0)  // 返回 123 的数值
+conv.MustIntOf[int]("123", 0)  // 返回 123 的数值
 conv.MustString(123, "")// 返回字符串 123
 conv.Int("123", 0)      // 返回 123 数值和 nil 的 error 接口
+
+conv.SliceOf[int]([]string{"1", "2", "3"}) // 返回 []int{1, 2, 3}
 ```
 
 安装
