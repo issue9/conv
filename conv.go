@@ -40,7 +40,8 @@ func str2Bool(str string) (bool, error) {
 // Bool 将 val 转换成 bool 类型或是在无法转换的情况下返回 error
 //
 // 以下值被可以被正确转换：
-//  123(true), 0(false),"-123"(true), "on"(true), "off"(false), "true"(true), "false"(false)
+//
+//	123(true), 0(false),"-123"(true), "on"(true), "off"(false), "true"(true), "false"(false)
 func Bool(val any) (bool, error) {
 	switch ret := val.(type) {
 	case bool:
@@ -331,7 +332,7 @@ func MustBytes(val any, def ...[]byte) []byte {
 func Slice(val any) ([]any, error) { return SliceOf[any](val) }
 
 // MustSlice 将 val 转换成 slice 类型或是在无法转换的情况下返回 def 参数
-func MustSlice(val any, def ...[]any) []any { return MustSliceOf[any](val, def...) }
+func MustSlice(val any, def ...[]any) []any { return MustSliceOf(val, def...) }
 
 // SliceOf 将 val 转换成 []T
 //
