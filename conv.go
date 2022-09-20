@@ -419,13 +419,13 @@ func toInt64(val any) (int64, error) {
 		if err == nil {
 			return int64(val), nil
 		}
-		return -1, typeError(val, "int64")
+		return -1, typeError(ret, "int64")
 	case string:
 		val, err := strconv.ParseFloat(ret, 64)
 		if err == nil {
 			return int64(val), nil
 		}
-		return -1, typeError(val, "int64")
+		return -1, typeError(ret, "int64")
 	default:
 		return -1, typeError(ret, "int64")
 	}
@@ -480,12 +480,12 @@ func toUint64(val any) (uint64, error) {
 		if val, err := strconv.ParseFloat(string(ret), 64); err == nil {
 			return uint64(val), nil
 		}
-		return 0, typeError(val, "uint64")
+		return 0, typeError(ret, "uint64")
 	case string:
 		if val, err := strconv.ParseFloat(ret, 64); err == nil {
 			return uint64(val), nil
 		}
-		return 0, typeError(val, "uint64")
+		return 0, typeError(ret, "uint64")
 	default:
 		return 0, typeError(ret, "uint64")
 	}
