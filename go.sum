@@ -1,4 +1,4 @@
-github.com/issue9/assert/v3 v3.0.1 h1:8DPOYgzX3ajiyrVZz6f3GoLn4wuy+vIV750CKFgFGmE=
-github.com/issue9/assert/v3 v3.0.1/go.mod h1:yft/uaskRpwQTyBT3n1zRl91SR1wNlO4fLZHzOa4bdM=
-golang.org/x/exp v0.0.0-20220609121020-a51bd0440498 h1:TF0FvLUGEq/8wOt/9AV1nj6D4ViZGUIGCMQfCv7VRXY=
-golang.org/x/exp v0.0.0-20220609121020-a51bd0440498/go.mod h1:yh0Ynu2b5ZUe3MQfp2nM0ecK7wsgouWTDN0FNeJuIys=
+github.com/issue9/assert/v3 v3.0.4 h1:WsYZQ6PQmM/pGFrbkn5GIXjWeVZHv+wcl2829UTX1Qc=
+github.com/issue9/assert/v3 v3.0.4/go.mod h1:yft/uaskRpwQTyBT3n1zRl91SR1wNlO4fLZHzOa4bdM=
+golang.org/x/exp v0.0.0-20221217163422-3c43f8badb15 h1:5oN1Pz/eDhCpbMbLstvIPa0b/BEQo6g6nwV3pLjfM6w=
+golang.org/x/exp v0.0.0-20221217163422-3c43f8badb15/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
