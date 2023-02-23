@@ -8,8 +8,6 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
-
-	"golang.org/x/exp/constraints"
 )
 
 // 抛出一个类型无法转换的错误
@@ -84,7 +82,7 @@ func MustBool(val any, def ...bool) bool {
 }
 
 // IntOf 转换成指定类型的符号整数
-func IntOf[T constraints.Signed](val any) (T, error) {
+func IntOf[T Signed](val any) (T, error) {
 	ret, err := toInt64(val)
 	if err != nil {
 		return 1, err
@@ -95,7 +93,7 @@ func IntOf[T constraints.Signed](val any) (T, error) {
 // UintOf 转换成指定类型的无符号整数
 //
 // 将一个有符号整数转换成无符号整数，负数将返回错误，正数和零正常转换
-func UintOf[T constraints.Unsigned](val any) (T, error) {
+func UintOf[T Unsigned](val any) (T, error) {
 	ret, err := toUint64(val)
 	if err != nil {
 		return 0, err
@@ -492,7 +490,7 @@ func toUint64(val any) (uint64, error) {
 }
 
 // MustIntOf 将 val 转换成 T 类型或是在无法转换的情况下返回 def 参数
-func MustIntOf[T constraints.Signed](val any, def ...T) T {
+func MustIntOf[T Signed](val any, def ...T) T {
 	if ret, err := IntOf[T](val); err == nil {
 		return ret
 	}
@@ -500,7 +498,7 @@ func MustIntOf[T constraints.Signed](val any, def ...T) T {
 }
 
 // MustUintOf 将 val 转换成 T 类型或是在无法转换的情况下返回 def 参数
-func MustUintOf[T constraints.Unsigned](val any, def ...T) T {
+func MustUintOf[T Unsigned](val any, def ...T) T {
 	if ret, err := UintOf[T](val); err == nil {
 		return ret
 	}
