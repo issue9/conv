@@ -16,7 +16,7 @@ type FieldConvert func(src string) (dest string)
 // FieldConvert 的默认实现
 func defaultFieldConvert(src string) string { return src }
 
-// 将 obj 对象转换成 map[string]interface{} 格式的数据
+// 将 obj 对象转换成 map[string]any 格式的数据
 func obj2Map(obj any, maps map[string]any, conv FieldConvert) error {
 	objVal := reflect.ValueOf(obj)
 	for objVal.Kind() == reflect.Ptr { // 如果是指针，则获取指向的对象
@@ -24,7 +24,7 @@ func obj2Map(obj any, maps map[string]any, conv FieldConvert) error {
 	}
 
 	if objVal.Kind() != reflect.Struct {
-		return typeError(obj, "map[string]interface{}")
+		return typeError(obj, "map[string]any")
 	}
 
 	objType := objVal.Type()
@@ -83,7 +83,7 @@ func Map2Obj(src any, dest any, conv FieldConvert) error {
 		k := keys[i]
 
 		if k.Kind() != reflect.String {
-			return errors.New("conv: src 必须为 map[string]interface{} 类型")
+			return errors.New("conv: src 必须为 map[string]any 类型")
 		}
 
 		srcItemVal := srcVal.MapIndex(k)
