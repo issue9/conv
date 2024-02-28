@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2014-2024 caixw
+//
 // SPDX-License-Identifier: MIT
 
 // Package conv 提供了基础的类型转换功能
