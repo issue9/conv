@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2014-2024 caixw
+// SPDX-FileCopyrightText: 2014-2025 caixw
 //
 // SPDX-License-Identifier: MIT
 
@@ -344,7 +344,7 @@ func SliceOf[T any](val any) ([]T, error) {
 		dest := make([]T, srcV.Len())
 		destV := reflect.ValueOf(dest)
 		destT := destV.Type().Elem()
-		if reflect.TypeOf('a').ConvertibleTo(destT) {
+		if reflect.TypeOf('a').ConvertibleTo(destT) { // TODO(go1.22) 可用 reflect.TypeFor 代替 typeOf
 			for i := 0; i < srcV.Len(); i++ {
 				destV.Index(i).Set(srcV.Index(i).Convert(destT))
 			}
