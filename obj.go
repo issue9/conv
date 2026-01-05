@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2014-2024 caixw
+// SPDX-FileCopyrightText: 2014-2026 caixw
 //
 // SPDX-License-Identifier: MIT
 
@@ -21,7 +21,7 @@ func defaultFieldConvert(src string) string { return src }
 // 将 obj 对象转换成 map[string]any 格式的数据
 func obj2Map(obj any, maps map[string]any, conv FieldConvert) error {
 	objVal := reflect.ValueOf(obj)
-	for objVal.Kind() == reflect.Ptr { // 如果是指针，则获取指向的对象
+	for objVal.Kind() == reflect.Pointer { // 如果是指针，则获取指向的对象
 		objVal = objVal.Elem()
 	}
 
@@ -42,7 +42,7 @@ func obj2Map(obj any, maps map[string]any, conv FieldConvert) error {
 		switch {
 		case fieldType.Anonymous: // 匿名字段
 			err = obj2Map(fieldVal.Interface(), maps, conv)
-		case fieldType.Type.Kind() == reflect.Ptr: // 如果是指针，就获取指针指向的元素
+		case fieldType.Type.Kind() == reflect.Pointer: // 如果是指针，就获取指针指向的元素
 			fieldVal = fieldVal.Elem()
 			fallthrough
 		case fieldType.Type.Kind() == reflect.Struct: // 嵌套类型
@@ -135,7 +135,7 @@ func Map2Obj(src any, dest any, conv FieldConvert) error {
 // 对 map2Obj 各个参数的检测，并返回正确的值或是错误信息。
 func map2ObjCheck(src any, dest any, conv FieldConvert) (srcVal reflect.Value, destVal reflect.Value, fun FieldConvert, err error) {
 	destVal = reflect.ValueOf(dest)
-	if destVal.Kind() != reflect.Ptr {
+	if destVal.Kind() != reflect.Pointer {
 		err = fmt.Errorf("conv: dest 必须为一个 struct 对象的指针，实际类型为[%v]", destVal.Type())
 		return
 	}
@@ -148,7 +148,7 @@ func map2ObjCheck(src any, dest any, conv FieldConvert) (srcVal reflect.Value, d
 
 	srcVal = reflect.ValueOf(src)
 
-	if srcVal.Kind() == reflect.Ptr { // src有可能是个map指针，需要转换成map对象
+	if srcVal.Kind() == reflect.Pointer { // src有可能是个map指针，需要转换成map对象
 		srcVal = srcVal.Elem()
 	}
 

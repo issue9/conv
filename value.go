@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2014-2024 caixw
+// SPDX-FileCopyrightText: 2014-2026 caixw
 //
 // SPDX-License-Identifier: MIT
 
@@ -18,7 +18,7 @@ import (
 func Value(source any, target reflect.Value) error {
 	kind := target.Kind()
 
-	for kind == reflect.Ptr {
+	for kind == reflect.Pointer {
 		target = target.Elem()
 		kind = target.Kind()
 	}
