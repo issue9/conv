@@ -1,10 +1,11 @@
-// SPDX-FileCopyrightText: 2014-2025 caixw
+// SPDX-FileCopyrightText: 2014-2026 caixw
 //
 // SPDX-License-Identifier: MIT
 
 package conv
 
 import (
+	"bytes"
 	"encoding"
 	"fmt"
 	"reflect"
@@ -415,13 +416,27 @@ func toInt64(val any) (int64, error) {
 		}
 		return 0, nil
 	case []byte:
-		val, err := strconv.ParseFloat(string(ret), 64)
+		if bytes.ContainsRune(ret, '.') { // 浮点
+			if val, err := strconv.ParseFloat(string(ret), 64); err == nil {
+				return int64(val), nil
+			}
+			return 0, typeError(ret, "uint64")
+		}
+
+		val, err := strconv.ParseInt(string(ret), 10, 64)
 		if err == nil {
 			return int64(val), nil
 		}
 		return -1, typeError(ret, "int64")
 	case string:
-		val, err := strconv.ParseFloat(ret, 64)
+		if strings.ContainsRune(ret, '.') { // 浮点
+			if val, err := strconv.ParseFloat(string(ret), 64); err == nil {
+				return int64(val), nil
+			}
+			return 0, typeError(ret, "uint64")
+		}
+
+		val, err := strconv.ParseInt(ret, 10, 64)
 		if err == nil {
 			return int64(val), nil
 		}
@@ -477,12 +492,26 @@ func toUint64(val any) (uint64, error) {
 		}
 		return 0, nil
 	case []byte:
-		if val, err := strconv.ParseFloat(string(ret), 64); err == nil {
+		if bytes.ContainsRune(ret, '.') { // 浮点
+			if val, err := strconv.ParseFloat(string(ret), 64); err == nil {
+				return uint64(val), nil
+			}
+			return 0, typeError(ret, "uint64")
+		}
+
+		if val, err := strconv.ParseUint(string(ret), 10, 64); err == nil {
 			return uint64(val), nil
 		}
 		return 0, typeError(ret, "uint64")
 	case string:
-		if val, err := strconv.ParseFloat(ret, 64); err == nil {
+		if strings.ContainsRune(ret, '.') { // 浮点
+			if val, err := strconv.ParseFloat(string(ret), 64); err == nil {
+				return uint64(val), nil
+			}
+			return 0, typeError(ret, "uint64")
+		}
+
+		if val, err := strconv.ParseUint(ret, 10, 64); err == nil {
 			return uint64(val), nil
 		}
 		return 0, typeError(ret, "uint64")
