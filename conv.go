@@ -345,7 +345,7 @@ func SliceOf[T any](val any) ([]T, error) {
 		dest := make([]T, srcV.Len())
 		destV := reflect.ValueOf(dest)
 		destT := destV.Type().Elem()
-		if reflect.TypeOf('a').ConvertibleTo(destT) { // TODO(go1.22) 可用 reflect.TypeFor 代替 typeOf
+		if reflect.TypeFor[byte]().ConvertibleTo(destT) {
 			for i := 0; i < srcV.Len(); i++ {
 				destV.Index(i).Set(srcV.Index(i).Convert(destT))
 			}
