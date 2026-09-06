@@ -83,7 +83,7 @@ func Value(source any, target reflect.Value) error {
 
 		l := s.Len()
 		tmp := reflect.MakeSlice(target.Type(), l, l)
-		for i := 0; i < l; i++ {
+		for i := range l {
 			si := s.Index(i).Interface()
 			if err := Value(si, tmp.Index(i)); err != nil {
 				return err
@@ -109,7 +109,7 @@ func Value(source any, target reflect.Value) error {
 			return fmt.Errorf("conv: 两者长度不一样，无法转换 %d: %d", l, target.Len())
 		}
 
-		for i := 0; i < l; i++ {
+		for i := range l {
 			si := s.Index(i).Interface()
 			if err := Value(si, target.Index(i)); err != nil {
 				return err

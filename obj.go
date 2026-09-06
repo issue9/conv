@@ -31,7 +31,7 @@ func obj2Map(obj any, maps map[string]any, conv FieldConvert) error {
 
 	objType := objVal.Type()
 	num := objType.NumField()
-	for i := 0; i < num; i++ {
+	for i := range num {
 		fieldType := objType.Field(i)
 		fieldVal := objVal.Field(i)
 		if !fieldVal.CanInterface() {
@@ -81,7 +81,7 @@ func Map2Obj(src any, dest any, conv FieldConvert) error {
 
 	keys := srcVal.MapKeys()
 	l := len(keys)
-	for i := 0; i < l; i++ {
+	for i := range l {
 		k := keys[i]
 
 		if k.Kind() != reflect.String {
